@@ -13,7 +13,7 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechRecognitionR
 public class SpeechtoText_main {
 	public static void main(String[] args) {
 	    SpeechToText service = new SpeechToText();
-	    service.setUsernameAndPassword("3b002d8e-eb0c-454c-9236-9af013c86162", "xfAKYItxF8xD");
+	    service.setUsernameAndPassword("J16016", "J16016");
 
 	    File audio = new File("audio/sample1.wav");
 
