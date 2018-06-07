@@ -18,6 +18,9 @@ public class SpeechtoText_main {
 	    File audio = new File("audio/sample1.wav");
 
 	    RecognizeOptions options = null;
+
+	    MySQL mysql = new MySQL();
+
 		try {
 			options = new RecognizeOptions.Builder()
 					.model("ja-JP_BroadbandModel")
@@ -28,20 +31,23 @@ public class SpeechtoText_main {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-	        SpeechRecognitionResults transcript = service.recognize(options).execute();
+		SpeechRecognitionResults transcript = service.recognize(options).execute();
 
-	        JsonNode node =null;
-	        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node =null;
+        ObjectMapper mapper = new ObjectMapper();
 
-	        try{
-	        	node =mapper.readTree(transcript.toString());
-	        } catch (IOException e){
-	        	e.printStackTrace();
-	        }
-	        System.out.println(transcript);
-	        String transcript1 = node.get("results").get(0).get("alternatives").get(0).get("transcript").asText();
-	        System.out.println(transcript1);
-	        Double confidence =node.get("results").get(0).get("alternatives").get(0).get("confidence").asDouble();
-	        System.out.println(confidence);
-			}
-	}
+        try{
+        	node =mapper.readTree(transcript.toString());
+        	//String text =node.get("results").get(0).get(al)
+            System.out.println(transcript);
+            String transcript1 = node.get("results").get(0).get("alternatives").get(0).get("transcript").asText();
+            System.out.println(transcript1);
+            Double confidence =node.get("results").get(0).get("alternatives").get(0).get("confidence").asDouble();
+            System.out.println(confidence);
+            mysql.updateImage(transcript1, confidence);
+        } catch (IOException e){
+        	e.printStackTrace();
+        }
+
+		}
+}
